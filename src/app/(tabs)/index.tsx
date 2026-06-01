@@ -1,9 +1,21 @@
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import {
+  ActivityIndicator,
+  Animated,
+  Easing,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { EmberBackground } from '@/components/ember-background';
+import { InteractiveTemperatureDial } from '@/components/dial/interactive-dial';
 import { isNleError, networkErrorCopy } from '@/lib/errors/nle-error';
-import { useDevices, usePollPauseOnBackground } from '@/lib/polling/use-devices';
+import {
+  useDevices,
+  usePollPauseOnBackground,
+} from '@/lib/polling/use-devices';
 import { useNleClient } from '@/lib/state/nle-client-hook';
 import { useSelectedDevice } from '@/lib/state/selected-device';
 import { useConfigStore } from '@/lib/state/config-store';
@@ -16,6 +28,8 @@ export default function HomeTab() {
   const { data: devices, error, isLoading } = useDevices(client);
   const device = useSelectedDevice(devices);
   const displayUnit = useConfigStore((s) => s.displayUnit);
+
+  const [snackbar, setSnackbar] = useState<string | null>(null);
 
   const mode = device?.mode ?? 'neutral';
 
@@ -41,30 +55,27 @@ export default function HomeTab() {
             <Text style={[EmberTypography.labelSmall(), styles.kicker]}>
               {(device.name ?? device.serial).toUpperCase()}
             </Text>
-            <View style={styles.dialPlaceholder}>
-              <Text style={EmberTypography.displayLarge()}>
-                {Math.round(toDisplay(device.targetTemperature, displayUnit))}
-                °
-              </Text>
-              <Text style={EmberTypography.bodyMediumItalic()}>
-                Currently{' '}
-                {Math.round(toDisplay(device.currentTemperature, displayUnit))}
-                °
-              </Text>
+            <View style={styles.dialWrap}>
+              <InteractiveTemperatureDial
+                device={device}
+                displayUnit={displayUnit}
+                onFailure={(msg) => setSnackbar(msg)}
+              />
             </View>
             <Text style={[EmberTypography.labelSmall(), styles.modeLabel]}>
               MODE · {device.mode.toUpperCase()}
             </Text>
           </View>
         )}
+
+        {snackbar && (
+          <View style={styles.snackbar}>
+            <Text style={EmberTypography.bodyMedium()}>{snackbar}</Text>
+          </View>
+        )}
       </SafeAreaView>
     </EmberBackground>
   );
-}
-
-function toDisplay(celsius: number, unit: 'C' | 'F'): number {
-  if (unit === 'F') return (celsius * 9) / 5 + 32;
-  return celsius;
 }
 
 function formatError(e: unknown): string {
@@ -90,14 +101,26 @@ function formatError(e: unknown): string {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  body: { flex: 1, paddingHorizontal: 32, paddingTop: 24, alignItems: 'center' },
-  kicker: { letterSpacing: 1.5, marginTop: 8 },
-  dialPlaceholder: {
-    marginTop: 48,
+  body: {
+    flex: 1,
+    paddingHorizontal: 32,
+    paddingTop: 24,
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
+    gap: 32,
   },
-  modeLabel: { position: 'absolute', bottom: 24 },
+  kicker: { letterSpacing: 1.5, marginTop: 8 },
+  dialWrap: { marginTop: 24 },
+  modeLabel: { position: 'absolute', bottom: 96 },
   errorTitle: { color: '#ff8a8a', maxWidth: 320, textAlign: 'center' },
+  snackbar: {
+    position: 'absolute',
+    bottom: 24,
+    left: 24,
+    right: 24,
+    padding: 14,
+    backgroundColor: '#0f0f12cc',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#ffffff15',
+  },
 });

@@ -154,18 +154,18 @@ self-contained commit + push.
 
 ### Custom UI — Temperature Dial
 
-- [ ] **i19** `<TemperatureDial>` SVG render with 72 ticks, mode
+- [x] **i19** `<TemperatureDial>` SVG render with 72 ticks, mode
       gradient, current-tick overlay. Read-only at first.
-- [ ] **i20** Hit-mapping helper (`tickIndexForLocalPoint`) ported
+- [x] **i20** Hit-mapping helper (`tickIndexForLocalPoint`) ported
       from Dart + unit tests.
-- [ ] **i21** GestureDetector (Pan + Tap), throttled selection-click
+- [x] **i21** GestureDetector (Pan + Tap), throttled selection-click
       haptic, drag-update callback.
-- [ ] **i22** Reanimated tween between target indexes (400ms ease-in-
+- [x] **i22** Reanimated tween between target indexes (400ms ease-in-
       out-cubic).
-- [ ] **i23** `<InteractiveTemperatureDial>` wrapper: optimistic state,
+- [x] **i23** `<InteractiveTemperatureDial>` wrapper: optimistic state,
       250ms debounced commit, 7s confirm timeout, snackbar on failure.
-- [ ] **i24** Heat-cool dual-bound write path (pick nearest bound).
-- [ ] **i25** Accessibility: slider role, increase/decrease, labels.
+- [x] **i24** Heat-cool dual-bound write path (pick nearest bound).
+- [x] **i25** Accessibility: slider role, increase/decrease, labels.
 
 ### Home extras
 

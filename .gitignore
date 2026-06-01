@@ -1,43 +1,82 @@
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# See CLAUDE.md §3 for the full hygiene contract. Anything sensitive
+# that slips past this list must be scrubbed from history before push.
 
-# dependencies
+# -------- dependencies / build output --------
 node_modules/
-
-# Expo
-.expo/
 dist/
 web-build/
+*.tsbuildinfo
+
+# -------- Expo --------
+.expo/
+.expo-shared/
 expo-env.d.ts
-
-# Native
-.kotlin/
-*.orig.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-
-# Metro
 .metro-health-check*
 
-# debug
+# -------- generated native projects (managed workflow) --------
+/ios
+/android
+
+# Re-list iOS artifacts in case someone ejects locally. These should
+# never reach a PR even if the /ios directory is briefly present.
+ios/Pods/
+ios/build/
+ios/.bundle/
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+
+# Android artifacts.
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/keystore.properties
+android/app/google-services.json
+
+# -------- code signing / credentials --------
+*.mobileprovision
+*.p12
+*.p8
+*.cer
+*.pem
+*.key
+*.keystore
+*.jks
+AuthKey_*.p8
+ExportOptions.plist
+credentials.json
+
+# Real google-services.json must never land here; ship a sample as
+# `google-services.example.json` if needed.
+google-services.json
+GoogleService-Info.plist
+
+# -------- env / secrets --------
+.env
+.env.local
+.env.*.local
+.env.development
+.env.staging
+.env.production
+# .env.example IS checked in (placeholders + docs) — see CLAUDE.md §2.
+
+# -------- logs / debug --------
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+pnpm-debug.log*
 
-# macOS
+# -------- editor / OS --------
 .DS_Store
-*.pem
+.kotlin/
+*.orig.*
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+.cursor/
 
-# local env files
-.env*.local
-
-# typescript
-*.tsbuildinfo
-
+# -------- misc --------
 example
-
-# generated native folders
-/ios
-/android
+coverage/
+*.tgz
