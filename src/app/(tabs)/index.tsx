@@ -1,37 +1,49 @@
 import { useState } from 'react';
 import {
   ActivityIndicator,
-  Animated,
-  Easing,
+  Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { DeviceOfflineOverlay } from '@/components/device-offline-overlay';
+import { DevicePickerSheet } from '@/components/device-picker-sheet';
 import { EmberBackground } from '@/components/ember-background';
+import { FanWidget } from '@/components/fan-widget';
 import { InteractiveTemperatureDial } from '@/components/dial/interactive-dial';
+import { StaleStatePill } from '@/components/stale-state-pill';
+import { StatusRow } from '@/components/status-row';
 import { isNleError, networkErrorCopy } from '@/lib/errors/nle-error';
 import {
   useDevices,
   usePollPauseOnBackground,
 } from '@/lib/polling/use-devices';
+import { useConfigStore } from '@/lib/state/config-store';
 import { useNleClient } from '@/lib/state/nle-client-hook';
 import { useSelectedDevice } from '@/lib/state/selected-device';
-import { useConfigStore } from '@/lib/state/config-store';
 import { EmberTypography } from '@/lib/theme';
 import * as Colors from '@/lib/theme/colors';
 
 export default function HomeTab() {
   usePollPauseOnBackground();
   const client = useNleClient();
-  const { data: devices, error, isLoading } = useDevices(client);
+  const {
+    data: devices,
+    error,
+    isLoading,
+    dataUpdatedAt,
+  } = useDevices(client);
   const device = useSelectedDevice(devices);
   const displayUnit = useConfigStore((s) => s.displayUnit);
+  const setPickedSerial = useConfigStore((s) => s.setPickedSerial);
 
   const [snackbar, setSnackbar] = useState<string | null>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   const mode = device?.mode ?? 'neutral';
+  const ageMs = dataUpdatedAt ? Date.now() - dataUpdatedAt : 0;
 
   return (
     <EmberBackground mode={mode}>
@@ -52,27 +64,51 @@ export default function HomeTab() {
 
         {!isLoading && !error && device && (
           <View style={styles.body}>
-            <Text style={[EmberTypography.labelSmall(), styles.kicker]}>
-              {(device.name ?? device.serial).toUpperCase()}
-            </Text>
+            <View style={styles.topRow}>
+              <Pressable onPress={() => setSheetOpen(true)}>
+                <Text style={[EmberTypography.labelSmall(), styles.kicker]}>
+                  {(device.name ?? device.serial).toUpperCase()} ▾
+                </Text>
+              </Pressable>
+              <StaleStatePill ageMs={ageMs} />
+            </View>
+
             <View style={styles.dialWrap}>
               <InteractiveTemperatureDial
                 device={device}
                 displayUnit={displayUnit}
                 onFailure={(msg) => setSnackbar(msg)}
               />
+              {!device.isOnline && <DeviceOfflineOverlay />}
             </View>
-            <Text style={[EmberTypography.labelSmall(), styles.modeLabel]}>
-              MODE · {device.mode.toUpperCase()}
-            </Text>
+
+            <StatusRow
+              device={device}
+              devices={devices ?? []}
+              selectedSerial={device.serial}
+              onSelectDevice={(s) => void setPickedSerial(s)}
+            />
+
+            <FanWidget device={device} />
           </View>
         )}
 
         {snackbar && (
-          <View style={styles.snackbar}>
+          <Pressable
+            onPress={() => setSnackbar(null)}
+            style={styles.snackbar}
+          >
             <Text style={EmberTypography.bodyMedium()}>{snackbar}</Text>
-          </View>
+          </Pressable>
         )}
+
+        <DevicePickerSheet
+          visible={sheetOpen}
+          devices={devices ?? []}
+          selectedSerial={device?.serial ?? null}
+          onPick={(s) => void setPickedSerial(s)}
+          onClose={() => setSheetOpen(false)}
+        />
       </SafeAreaView>
     </EmberBackground>
   );
@@ -103,18 +139,23 @@ const styles = StyleSheet.create({
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   body: {
     flex: 1,
-    paddingHorizontal: 32,
-    paddingTop: 24,
+    paddingHorizontal: 24,
+    paddingTop: 16,
     alignItems: 'center',
-    gap: 32,
+    gap: 24,
   },
-  kicker: { letterSpacing: 1.5, marginTop: 8 },
-  dialWrap: { marginTop: 24 },
-  modeLabel: { position: 'absolute', bottom: 96 },
+  topRow: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  kicker: { letterSpacing: 1.5 },
+  dialWrap: { marginTop: 8 },
   errorTitle: { color: '#ff8a8a', maxWidth: 320, textAlign: 'center' },
   snackbar: {
     position: 'absolute',
-    bottom: 24,
+    bottom: 88,
     left: 24,
     right: 24,
     padding: 14,

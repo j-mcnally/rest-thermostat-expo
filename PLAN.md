@@ -169,13 +169,13 @@ self-contained commit + push.
 
 ### Home extras
 
-- [ ] **i26** `<ModePills>` + interactive write.
-- [ ] **i27** `<FanWidget>` interactive (spin animation while fan is
+- [x] **i26** `<ModePills>` + interactive write.
+- [x] **i27** `<FanWidget>` interactive (spin animation while fan is
       on) + timer.
-- [ ] **i28** `<AwayChip>` interactive.
-- [ ] **i29** `<DeviceIndicatorDots>`, `<StaleStatePill>`,
+- [x] **i28** `<AwayChip>` interactive.
+- [x] **i29** `<DeviceIndicatorDots>`, `<StaleStatePill>`,
       `<StatusRow>`, offline overlay.
-- [ ] **i30** Device picker sheet (modal).
+- [x] **i30** Device picker sheet (modal).
 
 ### Details + Schedule + Logs + Settings
 
