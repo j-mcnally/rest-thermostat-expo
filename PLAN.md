@@ -97,6 +97,35 @@ free to revisit:
 | `lib/widgets/stale_state_pill.dart` | `src/components/stale-state-pill.tsx` | boilerplate | |
 | `lib/widgets/status_row.dart` | `src/components/status-row.tsx` | boilerplate | |
 
+## Public community hygiene
+
+This repo is public and community-facing — see [`CLAUDE.md`](./CLAUDE.md)
+for the durable contract every contributor reads on day one. The
+items below are a one-time setup; future iterations should not need
+to revisit them unless we add new env vars / signing material / build
+toolchains.
+
+- [x] `CLAUDE.md` at repo root with the full hygiene contract
+      (public-project conventions, no-secrets policy, gitignore
+      contract, abstraction boundaries, README requirements,
+      pre-flight checklist).
+- [x] `.gitignore` extended to cover iOS code-signing material,
+      Android keystores, EAS credentials, `.env`/`.env.local` /
+      `.env.*.local`, `google-services.json` / `GoogleService-Info.plist`.
+- [x] `.env.example` scaffolded with documented `EXPO_PUBLIC_*` and
+      build-time placeholders (no real values).
+- [x] `LICENSE` (MIT, 2026, Justin McNally and contributors) at root.
+- [x] `CONTRIBUTING.md` with pre-flight checklist and PR etiquette.
+- [x] `src/config/env.ts` — single source of truth for env vars.
+      Hand-rolled validator; no other file reads `process.env`.
+- [x] `src/branding.ts` — single source of truth for app name,
+      support email, marketing / repo URLs. Forks rebrand here.
+- [x] README updated with quickstart, CF Access docs link, "point at
+      your own server" walkthrough, contributing pointer, license.
+- [x] History scrubbed of any secrets (audit ran clean — no
+      service-token values, signing material, or backend hostnames
+      ever committed).
+
 ## Phase 1 — Plan + segregate
 
 - [x] **i0** Inventory upstream Flutter source.
