@@ -110,7 +110,7 @@ self-contained commit + push.
 
 ### Foundations
 
-- [ ] **i1** Install runtime deps (svg, gesture-handler, reanimated,
+- [x] **i1** Install runtime deps (svg, gesture-handler, reanimated,
       query, zustand, async-storage, secure-store, haptics, netinfo,
       linear-gradient, expo-font).
 - [ ] **i2** Ember theme constants (`src/lib/theme/colors.ts`,
