@@ -14,6 +14,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { EmberBackground } from '@/components/ember-background';
+import { config } from '@/config/env';
 import { createNleClient } from '@/lib/api/nle-client';
 import {
   authBasic,
@@ -41,13 +42,17 @@ export default function ServerSetupScreen() {
   const setServerUrl = useConfigStore((s) => s.setServerUrl);
   const setAuth = useConfigStore((s) => s.setAuth);
 
-  const [urlInput, setUrlInput] = useState('');
-  const [authTag, setAuthTag] = useState<AuthTag>('none');
+  const [urlInput, setUrlInput] = useState(config.devSeedServerUrl ?? '');
+  const [authTag, setAuthTag] = useState<AuthTag>(
+    config.devSeedCfAccess ? 'cf_service_token' : 'none',
+  );
   const [basicUser, setBasicUser] = useState('');
   const [basicPass, setBasicPass] = useState('');
   const [bearerToken, setBearerToken] = useState('');
-  const [cfId, setCfId] = useState('');
-  const [cfSecret, setCfSecret] = useState('');
+  const [cfId, setCfId] = useState(config.devSeedCfAccess?.clientId ?? '');
+  const [cfSecret, setCfSecret] = useState(
+    config.devSeedCfAccess?.clientSecret ?? '',
+  );
   const [testing, setTesting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

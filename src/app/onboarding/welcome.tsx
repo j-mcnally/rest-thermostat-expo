@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { EmberBackground } from '@/components/ember-background';
+import { branding } from '@/branding';
 import { EmberTypography } from '@/lib/theme';
 import * as Colors from '@/lib/theme/colors';
 
@@ -12,13 +13,13 @@ export default function WelcomeScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.hero}>
           <Text style={[EmberTypography.labelSmall(Colors.textTertiary), styles.kicker]}>
-            REST THERMOSTAT
+            {branding.appName.toUpperCase()}
           </Text>
           <Text style={[EmberTypography.displayLarge(), styles.title]}>
             Your{'\n'}control.
           </Text>
           <Text style={[EmberTypography.bodyMediumItalic(), styles.subtitle]}>
-            A native client for your NoLongerEvil server.
+            {branding.tagline}
           </Text>
         </View>
         <View style={styles.actions}>

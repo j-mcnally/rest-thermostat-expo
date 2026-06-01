@@ -208,12 +208,12 @@ self-contained commit + push.
 
 ### Details + Schedule + Logs + Settings
 
-- [ ] **i31** Details screen (`device/[serial].tsx`): humidity, eco,
+- [x] **i31** Details screen (`device/[serial].tsx`): humidity, eco,
       fan timer, capabilities table, raw HVAC state.
-- [ ] **i32** Schedule screen day strip + event list.
+- [x] **i32** Schedule screen day strip + event list.
 - [ ] **i33** Edit-event screen (`<EmberTimePicker>` + repeat-day row).
-- [ ] **i34** Logs screen (FlatList + share button).
-- [ ] **i35** Settings screen (server URL, auth, display unit,
+- [x] **i34** Logs screen (FlatList + share button).
+- [x] **i35** Settings screen (server URL, auth, display unit,
       diagnostics, disconnect).
 
 ### Polish
