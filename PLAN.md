@@ -132,14 +132,14 @@ self-contained commit + push.
 
 ### Storage + onboarding
 
-- [ ] **i9** `onboardingStore`: server URL (AsyncStorage), auth
+- [x] **i9** `onboardingStore`: server URL (AsyncStorage), auth
       (SecureStore), picked device serial (AsyncStorage).
-- [ ] **i10** Onboarding stack: welcome → server setup → device picker
+- [x] **i10** Onboarding stack: welcome → server setup → device picker
       → main. Persists, routes to (tabs) on completion.
-- [ ] **i11** Welcome screen design pass.
-- [ ] **i12** Server setup form: URL input, auth picker (None / Basic
+- [x] **i11** Welcome screen design pass.
+- [x] **i12** Server setup form: URL input, auth picker (None / Basic
       / Bearer / Cloudflare Access), test-connection button.
-- [ ] **i13** Device picker screen.
+- [x] **i13** Device picker screen.
 
 ### Main shell + state
 
