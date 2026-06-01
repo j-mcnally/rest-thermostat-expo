@@ -113,7 +113,7 @@ self-contained commit + push.
 - [x] **i1** Install runtime deps (svg, gesture-handler, reanimated,
       query, zustand, async-storage, secure-store, haptics, netinfo,
       linear-gradient, expo-font).
-- [ ] **i2** Ember theme constants (`src/lib/theme/colors.ts`,
+- [x] **i2** Ember theme constants (`src/lib/theme/colors.ts`,
       `typography.ts`, `index.ts`) and `<EmberBackground>` radial
       gradient component.
 - [ ] **i3** Root layout with QueryClient + StatusBar + dark theme;
@@ -122,7 +122,7 @@ self-contained commit + push.
 ### API + models
 
 - [ ] **i4** Auth config discriminated union + headers builder.
-- [ ] **i5** Device / Schedule / DevicesResponse types + parsers.
+- [x] **i5** Device / Schedule / DevicesResponse types + parsers (Device only — Schedule next).
 - [ ] **i6** `NleError` discriminated union + `classifyResponse` +
       CF-Access heuristic. Unit-tested with jest if jest is set up.
 - [ ] **i7** `nleClient`: fetch wrapper, header merge, 5xx+net retry
