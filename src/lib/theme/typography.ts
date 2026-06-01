@@ -2,10 +2,10 @@
  * Ember typography — ported from `lib/theme/typography.dart` upstream.
  *
  * The font families (Fraunces, Geist, JetBrainsMono, InstrumentSerif)
- * are loaded via expo-font in `src/app/_layout.tsx`. Until the fonts
- * are actually loaded these helpers fall back to system fonts. RN
- * resolves `fontFamily: undefined` to the platform default which keeps
- * the rest of the type system valid.
+ * are loaded through the `@expo-google-fonts/*` packages in
+ * `src/app/_layout.tsx`. The root layout holds the splash screen
+ * until the fonts resolve, so these helpers always reach a loaded
+ * face on first paint.
  */
 
 import type { TextStyle } from 'react-native';

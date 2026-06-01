@@ -218,11 +218,11 @@ self-contained commit + push.
 
 ### Polish
 
-- [ ] **i36** Fonts via expo-font (Fraunces, Geist, Instrument Serif,
-      JetBrains Mono). DEFERRED — typography.ts already references the
-      family names; loading the actual .ttf files needs `expo-font`
-      static imports + asset paths that a designer should drive. RN
-      falls back to system fonts in the meantime.
+- [x] **i36** Fonts via expo-font (Fraunces, Geist, Instrument Serif,
+      JetBrains Mono). Loaded through `@expo-google-fonts/*` packages
+      in `src/app/_layout.tsx`; splash screen held until fonts resolve
+      so the first frame uses the intended faces, not the platform
+      fallback.
 - [x] **i37** Splash + icon swap (Ember palette). Splash bg set to
       #000000; icons stayed at the Expo defaults — designer to swap.
 - [x] **i38** `npx tsc --noEmit` clean.
