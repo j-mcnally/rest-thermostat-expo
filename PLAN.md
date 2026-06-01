@@ -145,7 +145,7 @@ self-contained commit + push.
 - [x] **i2** Ember theme constants (`src/lib/theme/colors.ts`,
       `typography.ts`, `index.ts`) and `<EmberBackground>` radial
       gradient component.
-- [ ] **i3** Root layout with QueryClient + StatusBar + dark theme;
+- [x] **i3** Root layout with QueryClient + StatusBar + dark theme;
       placeholder index screen.
 
 ### API + models
