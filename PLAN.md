@@ -121,13 +121,13 @@ self-contained commit + push.
 
 ### API + models
 
-- [ ] **i4** Auth config discriminated union + headers builder.
-- [x] **i5** Device / Schedule / DevicesResponse types + parsers (Device only — Schedule next).
-- [ ] **i6** `NleError` discriminated union + `classifyResponse` +
+- [x] **i4** Auth config discriminated union + headers builder.
+- [x] **i5** Device / Schedule / DevicesResponse types + parsers.
+- [x] **i6** `NleError` discriminated union + `classifyResponse` +
       CF-Access heuristic. Unit-tested with jest if jest is set up.
-- [ ] **i7** `nleClient`: fetch wrapper, header merge, 5xx+net retry
+- [x] **i7** `nleClient`: fetch wrapper, header merge, 5xx+net retry
       once, surface `NleError`.
-- [ ] **i8** App logger (in-memory ring buffer) + logging
+- [x] **i8** App logger (in-memory ring buffer) + logging
       "interceptor" hook for nleClient.
 
 ### Storage + onboarding
