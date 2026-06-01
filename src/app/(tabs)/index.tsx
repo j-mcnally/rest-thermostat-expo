@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { ConnectionStatusPill, type ConnectionState } from '@/components/connection-status-pill';
 import { DeviceOfflineOverlay } from '@/components/device-offline-overlay';
 import { DevicePickerSheet } from '@/components/device-picker-sheet';
 import { EmberBackground } from '@/components/ember-background';
@@ -15,6 +16,7 @@ import { FanWidget } from '@/components/fan-widget';
 import { InteractiveTemperatureDial } from '@/components/dial/interactive-dial';
 import { StaleStatePill } from '@/components/stale-state-pill';
 import { StatusRow } from '@/components/status-row';
+import { router } from 'expo-router';
 import { isNleError, networkErrorCopy } from '@/lib/errors/nle-error';
 import {
   useDevices,
@@ -44,6 +46,13 @@ export default function HomeTab() {
 
   const mode = device?.mode ?? 'neutral';
   const ageMs = dataUpdatedAt ? Date.now() - dataUpdatedAt : 0;
+  const connState: ConnectionState = error
+    ? 'error'
+    : isLoading
+      ? 'idle'
+      : ageMs > 45_000
+        ? 'stale'
+        : 'live';
 
   return (
     <EmberBackground mode={mode}>
@@ -70,7 +79,10 @@ export default function HomeTab() {
                   {(device.name ?? device.serial).toUpperCase()} ▾
                 </Text>
               </Pressable>
-              <StaleStatePill ageMs={ageMs} />
+              <View style={{ flexDirection: 'row', gap: 6, alignItems: 'center' }}>
+                <ConnectionStatusPill state={connState} error={error} />
+                <StaleStatePill ageMs={ageMs} />
+              </View>
             </View>
 
             <View style={styles.dialWrap}>
@@ -90,6 +102,15 @@ export default function HomeTab() {
             />
 
             <FanWidget device={device} />
+
+            <Pressable
+              onPress={() => router.push(`/device/${device.serial}`)}
+              style={styles.detailsLink}
+            >
+              <Text style={EmberTypography.labelSmall(Colors.textTertiary)}>
+                DETAILS →
+              </Text>
+            </Pressable>
           </View>
         )}
 
@@ -163,5 +184,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
     borderColor: '#ffffff15',
+  },
+  detailsLink: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
   },
 });

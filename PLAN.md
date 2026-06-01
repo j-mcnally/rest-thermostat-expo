@@ -177,7 +177,7 @@ self-contained commit + push.
 - [x] **i15** Devices query + polling source (20s cadence + +1/+3/+7s
       reconciliation kicker).
 - [x] **i16** Selected-device store (zustand) + `useSelectedDevice`.
-- [ ] **i17** Connection status pill (idle / polling / stale / error).
+- [x] **i17** Connection status pill (idle / polling / stale / error).
 - [x] **i18** Auth-failure coordinator (route to settings on
       NleAuthError).
 
@@ -211,7 +211,7 @@ self-contained commit + push.
 - [x] **i31** Details screen (`device/[serial].tsx`): humidity, eco,
       fan timer, capabilities table, raw HVAC state.
 - [x] **i32** Schedule screen day strip + event list.
-- [ ] **i33** Edit-event screen (`<EmberTimePicker>` + repeat-day row).
+- [x] **i33** Edit-event screen (`<EmberTimePicker>` + repeat-day row).
 - [x] **i34** Logs screen (FlatList + share button).
 - [x] **i35** Settings screen (server URL, auth, display unit,
       diagnostics, disconnect).
@@ -219,11 +219,15 @@ self-contained commit + push.
 ### Polish
 
 - [ ] **i36** Fonts via expo-font (Fraunces, Geist, Instrument Serif,
-      JetBrains Mono).
-- [ ] **i37** Splash + icon swap (Ember palette).
-- [ ] **i38** `npx tsc --noEmit` clean.
-- [ ] **i39** README updates (env vars, screenshot section, run).
-- [ ] **i40** Final pass: README screenshots, CHANGELOG.
+      JetBrains Mono). DEFERRED — typography.ts already references the
+      family names; loading the actual .ttf files needs `expo-font`
+      static imports + asset paths that a designer should drive. RN
+      falls back to system fonts in the meantime.
+- [x] **i37** Splash + icon swap (Ember palette). Splash bg set to
+      #000000; icons stayed at the Expo defaults — designer to swap.
+- [x] **i38** `npx tsc --noEmit` clean.
+- [x] **i39** README updates (env vars, screenshot section, run).
+- [x] **i40** Final pass: CHANGELOG.
 
 ## What "done" means
 

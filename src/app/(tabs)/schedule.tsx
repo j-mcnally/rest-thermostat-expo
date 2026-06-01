@@ -7,6 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import { router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useQuery } from '@tanstack/react-query';
 
@@ -95,8 +96,11 @@ export default function ScheduleTab() {
               data={events}
               keyExtractor={(e, i) => `${e.time}-${i}`}
               contentContainerStyle={styles.list}
-              renderItem={({ item }) => (
-                <View style={styles.row}>
+              renderItem={({ item, index }) => (
+                <Pressable
+                  onPress={() => router.push(`/schedule/edit/${day}:${index}`)}
+                  style={styles.row}
+                >
                   <Text style={[EmberTypography.bodyLarge(), { width: 90 }]}>
                     {minutesToHm(item.time)}
                   </Text>
@@ -115,8 +119,16 @@ export default function ScheduleTab() {
                       </Text>
                     )}
                   </View>
-                </View>
+                </Pressable>
               )}
+              ListFooterComponent={
+                <Pressable
+                  onPress={() => router.push(`/schedule/edit/${day}:new`)}
+                  style={[styles.row, styles.rowAdd]}
+                >
+                  <Text style={EmberTypography.labelSmall()}>+ NEW EVENT</Text>
+                </Pressable>
+              }
             />
           </>
         )}
@@ -148,5 +160,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#ffffff08',
     gap: 12,
+  },
+  rowAdd: {
+    backgroundColor: '#ffffff05',
+    borderWidth: 1,
+    borderColor: '#ffffff15',
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
   },
 });

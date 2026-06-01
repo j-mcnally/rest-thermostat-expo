@@ -3,6 +3,7 @@ import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { AuthFailureWatcher } from '@/lib/state/auth-failure-watcher';
 import { RootProviders } from '@/lib/state/providers';
 
 export default function RootLayout() {
@@ -11,6 +12,7 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <RootProviders>
           <StatusBar style="light" />
+          <AuthFailureWatcher />
           <Stack
             screenOptions={{
               headerShown: false,
