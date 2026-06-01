@@ -143,13 +143,13 @@ self-contained commit + push.
 
 ### Main shell + state
 
-- [ ] **i14** `(tabs)/_layout.tsx` bottom tab bar (Home / Schedule /
+- [x] **i14** `(tabs)/_layout.tsx` bottom tab bar (Home / Schedule /
       Logs / Settings).
-- [ ] **i15** Devices query + polling source (20s cadence + +1/+3/+7s
+- [x] **i15** Devices query + polling source (20s cadence + +1/+3/+7s
       reconciliation kicker).
-- [ ] **i16** Selected-device store (zustand) + `useSelectedDevice`.
+- [x] **i16** Selected-device store (zustand) + `useSelectedDevice`.
 - [ ] **i17** Connection status pill (idle / polling / stale / error).
-- [ ] **i18** Auth-failure coordinator (route to settings on
+- [x] **i18** Auth-failure coordinator (route to settings on
       NleAuthError).
 
 ### Custom UI — Temperature Dial
